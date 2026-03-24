@@ -2,9 +2,6 @@ import numpy as np
 
 
 class KNN:
-    """
-    K-классификатор ближайших соседей, использующий потери L1
-    """
     def __init__(self, k=1):
         self.k = k
 
@@ -44,80 +41,45 @@ class KNN:
 
 
     def compute_distances_one_loop(self, X):
-        '''
-        Вычисляет расстояние L1 от каждой выборки X до каждой обучающей выборки 
-        Векторизует некоторые вычисления, поэтому используется только 1 цикл
 
-        Аргументы:
-        X, np-массив (num_test_samples, num_features) - образцы для запуска
-        
-        Возвращается:
-        расстояния, np-массив (num_test_samples, num_train_samples) - массив
-           с расстояниями между каждым тестом и каждой тренировочной выборкой
-        '''
         num_train = self.train_X.shape[0]
         num_test = X.shape[0]
+
         dists = np.zeros((num_test, num_train), np.float32)
+
         for i_test in range(num_test):
-            pass
+            
+            dists[i_test, :] = np.sum(np.abs(X[i_test] - self.train_X), axis= 1) # не уверен в этом
         return dists
 
     def compute_distances_no_loops(self, X):
-        '''
-        Вычисляет расстояние L1 от каждой выборки X до каждой обучающей выборки
-        Полностью векторизует вычисления с помощью numpy
 
-        Аргументы:
-        X, np-массив (num_test_samples, num_features) - образцы для запуска
-        
-        Возвращается:
-        расстояния, np-массив (num_test_samples, num_train_samples) - массив
-           с расстояниями между каждым тестом и каждой тренировочной выборкой
-        '''
         num_train = self.train_X.shape[0]
         num_test = X.shape[0]
-        # Using float32 to to save memory - the default is float64
+
         dists = np.zeros((num_test, num_train), np.float32)
-        # TODO: Implement computing all distances with no loops!
-        pass
+        #честно говорю подсмотрел в инете, долго голову ломал.... очень....
+        dists = np.sum(np.abs(X[:, np.newaxis, :] - self.train_X[np.newaxis, :, :]), axis=2)
+        return dists
+
 
     def predict_labels_binary(self, dists):
-        '''
-        Возвращает предсказания модели для случая бинарной классификации
-        
-        Аргументы:
-        расстояния, np-массив (num_test_samples, num_train_samples) - массив
-           с расстояниями между каждым тестом и каждой тренировочной выборкой
-
-        Возвращается:
-        pred, np-массив bool (num_test_samples) - двоичные прогнозы
-        для каждого тестового образца
-        '''
         num_test = dists.shape[0]
         pred = np.zeros(num_test, np.bool)
         for i in range(num_test):
-            # TODO: Implement choosing best class based on k
-            # nearest training samples
-            pass
+            pred[i] = np.sum(self.train_y[
+                np.argsort(dists[i])[:self.k]
+                ]) > (self.k / 2)
         return pred
 
     def predict_labels_multiclass(self, dists):
-        '''
-        Возвращает предсказания модели для случая многоклассовой классификации
         
-        Аргументы:
-        расстояния, np-массив (num_test_samples, num_train_samples) - массив
-           с расстояниями между каждым тестом и каждой тренировочной выборкой
-
-        Возвращается:
-        pred, np-массив int (num_test_samples) - прогнозируемый индекс класса
-        для каждой тестовой выборки
-        '''
-        num_test = dists.shape[0]
         num_test = dists.shape[0]
         pred = np.zeros(num_test, np.int)
+
         for i in range(num_test):
-            # TODO: Implement choosing best class based on k
-            # nearest training samples
-            pass
+            labl = self.train_y[
+                np.argsort(dists[i])[:self.k]
+                ]
+            pred[i] = np.argmax(np.bincount(labl))
         return pred

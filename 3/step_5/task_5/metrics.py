@@ -1,21 +1,21 @@
 def binary_classification_metrics(prediction, ground_truth):
     '''
-    Вычисляет показатели для бинарной классификации
+    Computes metrics for binary classification
 
-    Аргументы:
-    предсказание, np-массив значений bool (num_samples) - предсказания модели
-    ground_truth, np-массив значений bool (num_samples) - истинные метки
+    Arguments:
+    prediction, np array of bool (num_samples) - model predictions
+    ground_truth, np array of bool (num_samples) - true labels
 
-    Возвращается:
-    точность, отзыв, f1, accuracy - показатели классификации
+    Returns:
+    precision, recall, f1, accuracy - classification metrics
     '''
     precision = 0
     recall = 0
     accuracy = 0
     f1 = 0
 
-    # TODO: внедряйте показатели!
-    # Несколько полезных ссылок:
+    # TODO: implement metrics!
+    # Some helpful links:
     # https://en.wikipedia.org/wiki/Precision_and_recall
     # https://en.wikipedia.org/wiki/F1_score
     
@@ -24,14 +24,14 @@ def binary_classification_metrics(prediction, ground_truth):
 
 def multiclass_accuracy(prediction, ground_truth):
     '''
-    Вычисляет показатели для многоклассовой классификации
+    Computes metrics for multiclass classification
 
-    Аргументы:
-    предсказание, np-массив int (num_samples) - модельные предсказания
-    ground_truth, np-массив int (num_samples) - истинные метки
+    Arguments:
+    prediction, np array of int (num_samples) - model predictions
+    ground_truth, np array of int (num_samples) - true labels
 
-    Возвращается:
-    точность - отношение точных прогнозов к общему количеству выборок.
+    Returns:
+    accuracy - ratio of accurate predictions to total samples
     '''
-    # TODO: Обеспечение точности вычислений
+    # TODO: Implement computing accuracy
     return 0
