@@ -6,8 +6,10 @@ def binary_classification_metrics(prediction, ground_truth):
 
         #main == np.zeros((2, 2), np.int_)
         TP, TN, FN, FP = 0,0,0,0
-        for pred in range(prediction):
-            for truth in range(ground_truth):
+        for i in range(len(prediction)):
+            for j in range(len(ground_truth)):
+                pred = prediction[i]
+                truth = ground_truth[j]
                 if pred == 0 and truth == 0:
                     TN += 1
                 elif pred == 1 and truth == 1:
