@@ -75,7 +75,8 @@ class KNN:
     def predict_labels_multiclass(self, dists):
         
         num_test = dists.shape[0]
-        pred = np.zeros(num_test, np.int)
+        #pred = np.zeros(num_test, np.int)
+        pred = np.zeros(num_test, dtype= int)
 
         for i in range(num_test):
             labl = self.train_y[

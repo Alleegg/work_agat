@@ -6,18 +6,18 @@ def binary_classification_metrics(prediction, ground_truth):
 
         #main == np.zeros((2, 2), np.int_)
         TP, TN, FN, FP = 0,0,0,0
-        for i in range(len(prediction)):
-            for j in range(len(ground_truth)):
-                pred = prediction[i]
-                truth = ground_truth[j]
-                if pred == 0 and truth == 0:
-                    TN += 1
-                elif pred == 1 and truth == 1:
-                    TP += 1
-                elif pred == 0 and truth == 1:
-                    FN += 1
-                elif pred == 1 and truth == 0:
-                    FP += 1
+        # for i in range(len(prediction)):
+        for j in range(len(ground_truth)):
+            pred = prediction[j]
+            truth = ground_truth[j]
+            if pred == 0 and truth == 0:
+                TN += 1
+            elif pred == 1 and truth == 1:
+                TP += 1
+            elif pred == 0 and truth == 1:
+                FN += 1
+            elif pred == 1 and truth == 0:
+                FP += 1
                 
         # main = np.array([TP, FN],
         #                 [FP, TN])
@@ -54,9 +54,9 @@ def multiclass_accuracy(prediction, ground_truth):
         general = len(prediction)
 
         count_true = 0
-        for pred in range(prediction):
-            for truth in range(ground_truth):
-                if pred == truth: count_true += 1
+        for pred in range(len(prediction)):
+            if prediction[pred] == ground_truth[pred]: 
+                count_true += 1
 
         accuracy = count_true / general
 
